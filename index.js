@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const config = require('./config.json');
 
 (async () => {
   // === 啟動瀏覽器 ===
@@ -39,10 +40,8 @@ const fs = require('fs');
 
   // === 訪問目標網址 ===
   console.log('🔗 訪問頁面...');
-  await page.goto(
-    'https://solscan.io/account/AaZkwhkiDStDcgrU37XAj9fpNLrD8Erz5PNkdm4k5hjy?flow=out&token_address=So11111111111111111111111111111111111111111#transfers',
-    { waitUntil: 'networkidle2' }
-  );
+  const url = `https://solscan.io/account/${config.account}?flow=${config.flow}&token_address=${config.token_address}`;
+  await page.goto(url, { waitUntil: 'networkidle2' });
 
   // === 滾動到按鈕可見 ===
   console.log('🖱️ 滾動到按鈕位置...');
